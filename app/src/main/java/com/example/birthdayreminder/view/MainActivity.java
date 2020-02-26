@@ -1,7 +1,9 @@
-package com.example.birthdayreminder;
+package com.example.birthdayreminder.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.birthdayreminder.R;
 
 public class MainActivity extends AppCompatActivity {
 
