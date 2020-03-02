@@ -15,7 +15,9 @@ import com.example.birthdayreminder.data.model.Birthday;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDatabaseActivity extends BaseActivity {
+public class ShowDatabaseActivity extends BaseActivity implements ShowDatabaseContract {
+    ShowDatabasePresenter presenter;
+    ShowDatabaseContract contract;
     private ShowDatabaseAdapter adapter;
     private List<Birthday> birthdays = new ArrayList<>();
 
@@ -24,9 +26,6 @@ public class ShowDatabaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_database);
-        setupToolbar();
-        intiRecyclerView();
-        loadContacts();
     }
 
     @Override
@@ -34,29 +33,20 @@ public class ShowDatabaseActivity extends BaseActivity {
         return R.layout.activity_show_database;
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        }
+    @Override
+    public void loadBirthdays() {
+        contract.loadBirthdays();
     }
 
-    private void loadContacts() {
-        final Handler handler = new Handler();
-        Thread backgroundThread = new Thread(() -> {
-            birthdays = AppDatabase.getINSTANCE(ShowDatabaseActivity.this).contactDao().getAll();
-            handler.post(() -> adapter.setBirthdays(birthdays));
-        });
-        backgroundThread.start();
+    @Override
+    public void setupToolbar() {
+        contract.setupToolbar();
+
     }
 
-    private void intiRecyclerView() {
-        adapter = new RecyclerViewAdapter(ShowDatabaseActivity.this);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void initRecyclerView() {
+        contract.initRecyclerView();
     }
+
 }

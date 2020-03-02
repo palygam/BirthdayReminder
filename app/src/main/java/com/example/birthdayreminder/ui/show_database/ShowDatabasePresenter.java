@@ -1,10 +1,18 @@
 package com.example.birthdayreminder.ui.show_database;
 
+import android.os.Handler;
+
+import com.example.birthdayreminder.base.BasePresenter;
+import com.example.birthdayreminder.base.BaseView;
+import com.example.birthdayreminder.data.database.AppDatabase;
 import com.example.birthdayreminder.data.model.Birthday;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowDatabasePresenter {
+    AppDatabase appDatabase = AppDatabase.getInstance(BasePresenter.getContext());
+    private List<Birthday> birthdays = new ArrayList<>();
     private ShowDatabaseContract showDatabaseContract;
     private ShowDatabaseAdapter adapter;
 
@@ -13,22 +21,14 @@ public class ShowDatabasePresenter {
         this.adapter = adapter;
     }
 
+    public void loadBirthdaysList(){
+        final Handler handler = new Handler();
+        Thread backgroundThread = new Thread(() -> {
+            birthdays = appDatabase.birthdayDao().getAll();
+            handler.post(() -> adapter.setBirthdays(birthdays));
+        });
+        backgroundThread.start();
 
-   /* void onItemClicked(String item) {
-        if (mShowDatabaseContract != null) {
-            mShowDatabaseContract.showMessage(String.format("%s clicked", item));
-        }
-    }*/
-
-    void onDestroy() {
-        showDatabaseContract = null;
-    }
-
-    public void onFinished(List<Birthday> birthdays) {
-        if (showDatabaseContract != null) {
-            showDatabaseContract.setBirthdays(birthdays);
-            showDatabaseContract.hideProgress();
-        }
     }
 
     public ShowDatabaseContract getShowDatabaseContract() {
