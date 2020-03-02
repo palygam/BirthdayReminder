@@ -1,8 +1,8 @@
-package com.example.birthdayreminder.view.ui.show_database;
+package com.example.birthdayreminder.ui.show_database;
 
 import java.util.List;
 
-public interface ShowDatabaseView {
+public interface ShowDatabaseContract {
 
     void showProgress();
 

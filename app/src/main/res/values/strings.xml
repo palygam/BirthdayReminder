@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">BirthdayReminder</string>
+    <string name="button_new_input">Create New Birthday Notification</string>
+    <string name="button_show_birthdays_list">Upcoming </string>
+    <string name="text_input_last_name">Enter Last Name </string>
+    <string name="text_input_first_name">Enter First Name </string>
+    <string name="text_input_birthday">Enter Birthday Date </string>
+    <string name="button_send_to_database">Create Notification! </string>
+    <string name="no_information">No information </string>
+
+
 </resources>

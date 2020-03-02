@@ -1,4 +1,4 @@
-package com.example.birthdayreminder.view.database;
+package com.example.birthdayreminder.data.database;
 
 public class AppDatabase {
 //содержит синглтон базы данных

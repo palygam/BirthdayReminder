@@ -1,4 +1,4 @@
-package com.example.birthdayreminder.view.ui.show_database;
+package com.example.birthdayreminder.ui.show_database;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
