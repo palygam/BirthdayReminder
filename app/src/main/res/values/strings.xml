@@ -7,6 +7,9 @@
     <string name="text_input_birthday">Enter Birthday Date </string>
     <string name="button_send_to_database">Create Notification! </string>
     <string name="no_information">No information </string>
+    <string name="add_new_birthday">Создать событие </string>
+    <string name="search_title">Поиск </string>
+    <string name="settings">Настройки </string>
 
 
 </resources>

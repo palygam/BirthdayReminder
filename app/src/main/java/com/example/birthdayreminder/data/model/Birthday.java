@@ -20,12 +20,12 @@ public class Birthday {
     private String lastName;
 
     @ColumnInfo(name = "birthday")
-    private Date birthday;
+    private long dateOfBirth;
 
-    Birthday(@NonNull String firstName, @NonNull String lastName, @NonNull Date birthday) {
+    public Birthday(@NonNull String firstName, @NonNull String lastName, @NonNull long dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getId() {
@@ -52,10 +52,11 @@ public class Birthday {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public long getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }}
+    public void setDateOfBirth(long dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+}

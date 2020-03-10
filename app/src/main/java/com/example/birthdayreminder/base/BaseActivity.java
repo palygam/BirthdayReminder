@@ -1,26 +1,47 @@
 package com.example.birthdayreminder.base;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.birthdayreminder.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        setView();
+        //  setView();
+        setupToolbar();
     }
 
+    public void setupToolbar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
 
-    protected abstract int getLayoutId();
     public void setView(){}
 
-    public void navigateTo(){
-        startActivity(new Intent());
+    protected abstract int getLayoutId();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.user_menu, menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_notification_menu:
+                //startActivity(new Intent(ShowDatabaseActivity.this, MainActivity.class));
+                return true;
+            case R.id.settings:
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }}
 }

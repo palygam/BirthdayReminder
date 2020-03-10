@@ -2,8 +2,11 @@ package com.example.birthdayreminder.base;
 
 import android.content.Context;
 
-public class BasePresenter{
+public interface BasePresenter{
 
+    void loadBirthdaysList();
+
+/*
     private static Context context;
 
     public BasePresenter (Context context){
@@ -12,5 +15,5 @@ public class BasePresenter{
 
     public static Context getContext() {
         return context;
-    }
+    }*/
 }

@@ -1,37 +1,53 @@
 package com.example.birthdayreminder.ui.show_database;
 
 import android.os.Handler;
-
+import android.util.Log;
 import com.example.birthdayreminder.base.BasePresenter;
+import com.example.birthdayreminder.base.BaseRepository;
 import com.example.birthdayreminder.base.BaseView;
-import com.example.birthdayreminder.data.database.AppDatabase;
+import com.example.birthdayreminder.data.AppDatabase;
 import com.example.birthdayreminder.data.model.Birthday;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDatabasePresenter {
-    AppDatabase appDatabase = AppDatabase.getInstance(BasePresenter.getContext());
+public class ShowDatabasePresenter implements BasePresenter {
+  //  private ShowDatabaseAdapter adapter;
+    private static final String TAG = "DatabasePresenter";
+    private BaseView view;
+    private BaseRepository repository;
     private List<Birthday> birthdays = new ArrayList<>();
-    private ShowDatabaseContract showDatabaseContract;
-    private ShowDatabaseAdapter adapter;
+  //  private MainContract.Repository mRepository;
 
-    ShowDatabasePresenter(ShowDatabaseContract showDatabaseContract, ShowDatabaseAdapter adapter) {
-        this.showDatabaseContract = showDatabaseContract;
-        this.adapter = adapter;
+    public ShowDatabasePresenter(BaseView view) {
+        this.view = view;
+        this.repository = new ShowDatabaseRepository();
+        Log.d(TAG, "Constructor" );
     }
+
 
     public void loadBirthdaysList(){
-        final Handler handler = new Handler();
-        Thread backgroundThread = new Thread(() -> {
-            birthdays = appDatabase.birthdayDao().getAll();
-            handler.post(() -> adapter.setBirthdays(birthdays));
+        Log.d(TAG, "loadBirthdays()");
+        final Handler handler =new Handler();
+        Thread backgroundThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                birthdays = AppDatabase.getInstance().birthdayDao().getAll();
+                handler.post(() -> adapter.setBirthdays(birthdays));
+            }
         });
         backgroundThread.start();
-
+        Log.d(TAG, "loadBirthdaysList");
     }
 
-    public ShowDatabaseContract getShowDatabaseContract() {
-        return showDatabaseContract;
+
+     public void initRecyclerView(){
+
+     }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy()");
     }
+
 }

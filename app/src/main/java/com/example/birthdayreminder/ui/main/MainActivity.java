@@ -10,11 +10,11 @@ import android.widget.Button;
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.ui.add_new_birthday.NewBirthdayActivity;
 
-public class MainActivity extends AppCompatActivity implements MainActivityContract{
+public class MainActivity {
     //главная активити, а которой находятся кнопки 1) "Добавить день рождения"
     //2)"показать ближайшие дни рождения"
     //The only thing that the view will do is calling a presenter method every time there is a user action (a button click for example).
-    //
+ /*   //
 
     private MainActivityPresenter presenter;
     @Override
@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setContentView(R.layout.activity_main);
         addButtonMainActivity();
     }
-
-    private void addButtonMainActivity() {
+*/
+  /*  private void addButtonMainActivity() {
         final Handler handler = new Handler();
         presenter = new MainActivityPresenter(handler,this);
         final Button addNewBirthday = findViewById(R.id.button_new_input);
@@ -36,26 +36,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             presenter.showBirthdaysList();
 
         });
-    }
+    }*/
 
-    @Override
-    public void navigateTo() {
-        startActivity(new Intent(this, NewBirthdayActivity.class));
-        finish();
-    }
 
-    @Override
-    public void loadBirthdays() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
 }

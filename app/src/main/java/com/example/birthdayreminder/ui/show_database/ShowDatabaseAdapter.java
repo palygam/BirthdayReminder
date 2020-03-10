@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.data.model.Birthday;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,12 @@ public class ShowDatabaseAdapter extends RecyclerView.Adapter<ShowDatabaseAdapte
     public void onBindViewHolder(@NonNull BirthdaysViewHolder holder, int position) {
         Birthday currentBirthday = birthdays.get(position);
         if (currentBirthday!= null) {
+            String date = null;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            date = simpleDateFormat.format(currentBirthday.getDateOfBirth());
             holder.LastNameView.setText(currentBirthday.getLastName());
             holder.FirstNameView.setText(currentBirthday.getFirstName());
-// holder.birthday.setText(currentBirthday.getBirthday());
+            holder.birthday.setText(date);
         } else {
             holder.LastNameView.setText(context.getResources().getString(R.string.no_information));
             holder.FirstNameView.setText(context.getResources().getString(R.string.no_information));

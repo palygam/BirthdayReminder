@@ -1,23 +1,26 @@
 package com.example.birthdayreminder.ui.show_database;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
+import android.view.MenuItem;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.data.database.AppDatabase;
+import com.example.birthdayreminder.base.BasePresenter;
+import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Birthday;
+import com.example.birthdayreminder.ui.add_new_birthday.NewBirthdayActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDatabaseActivity extends BaseActivity implements ShowDatabaseContract {
-    ShowDatabasePresenter presenter;
-    ShowDatabaseContract contract;
+public class ShowDatabaseActivity extends BaseActivity implements BaseView {
+    private static final String TAG = "ShowDataBaseActivity";
+    private BasePresenter presenter;
     private ShowDatabaseAdapter adapter;
     private List<Birthday> birthdays = new ArrayList<>();
 
@@ -25,7 +28,11 @@ public class ShowDatabaseActivity extends BaseActivity implements ShowDatabaseCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_database);
+        setContentView(getLayoutId());
+        presenter = new ShowDatabasePresenter(this);
+        setView();
+        presenter.loadBirthdaysList();
+        Log.d(TAG, "onCreate()");
     }
 
     @Override
@@ -34,19 +41,41 @@ public class ShowDatabaseActivity extends BaseActivity implements ShowDatabaseCo
     }
 
     @Override
-    public void loadBirthdays() {
-        contract.loadBirthdays();
-    }
-
-    @Override
     public void setupToolbar() {
-        contract.setupToolbar();
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        }
     }
 
     @Override
-    public void initRecyclerView() {
-        contract.initRecyclerView();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_notification_menu:
+                startActivity(new Intent(ShowDatabaseActivity.this, NewBirthdayActivity.class));
+                return true;
+            case R.id.settings:
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
+    @Override
+    public void setView() {
+        adapter = new ShowDatabaseAdapter(ShowDatabaseActivity.this);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+        Log.d(TAG, "onDestroy()");
+    }
 }

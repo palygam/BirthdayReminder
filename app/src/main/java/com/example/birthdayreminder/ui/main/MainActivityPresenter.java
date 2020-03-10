@@ -1,3 +1,4 @@
+/*
 package com.example.birthdayreminder.ui.main;
 
 import android.os.Handler;
@@ -17,3 +18,4 @@ public class MainActivityPresenter {
         mainActivityContract.loadBirthdays();
     }
 }
+*/
