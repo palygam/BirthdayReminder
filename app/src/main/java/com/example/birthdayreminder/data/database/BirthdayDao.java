@@ -12,7 +12,6 @@ import java.util.List;
 
 @Dao
 public interface BirthdayDao {
-    // запрос, отсортировать по ближайшей дате
 
     @Query("SELECT * FROM table_birthdays")
     List<Birthday> getAll();

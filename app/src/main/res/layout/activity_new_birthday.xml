@@ -7,6 +7,14 @@
     android:orientation="vertical"
     app:errorEnabled="true">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/last_name_wrapper"
         android:layout_width="match_parent"

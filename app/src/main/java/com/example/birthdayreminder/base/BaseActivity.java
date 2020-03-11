@@ -9,11 +9,12 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.birthdayreminder.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    BaseView view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        //  setView();
+        setView();
         setupToolbar();
     }
 
@@ -37,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_notification_menu:
-                //startActivity(new Intent(ShowDatabaseActivity.this, MainActivity.class));
                 return true;
             case R.id.settings:
 

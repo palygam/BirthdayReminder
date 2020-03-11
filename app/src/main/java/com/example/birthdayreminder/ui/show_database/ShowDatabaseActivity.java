@@ -12,27 +12,19 @@ import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.base.BaseView;
-import com.example.birthdayreminder.data.model.Birthday;
 import com.example.birthdayreminder.ui.add_new_birthday.NewBirthdayActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ShowDatabaseActivity extends BaseActivity implements BaseView {
-    private static final String TAG = "ShowDataBaseActivity";
-    private BasePresenter presenter;
     private ShowDatabaseAdapter adapter;
-    private List<Birthday> birthdays = new ArrayList<>();
-
+    private BasePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        presenter = new ShowDatabasePresenter(this);
+        presenter = new ShowDatabasePresenter(this, adapter);
         setView();
         presenter.loadBirthdaysList();
-        Log.d(TAG, "onCreate()");
     }
 
     @Override
@@ -58,7 +50,6 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
                 startActivity(new Intent(ShowDatabaseActivity.this, NewBirthdayActivity.class));
                 return true;
             case R.id.settings:
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -76,6 +67,5 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        Log.d(TAG, "onDestroy()");
     }
 }

@@ -2,20 +2,24 @@ package com.example.birthdayreminder.base;
 
 import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.data.AppDatabase;
+import com.example.birthdayreminder.data.database.BirthdayDao;
+import com.example.birthdayreminder.data.model.Birthday;
 
-public abstract class BaseRepository {
-    CustomApplication application;
+import java.util.List;
 
-    AppDatabase getAppDatabase(){
-        return application.database;
+public class BaseRepository {
+    private BirthdayDao birthdayDao;
+
+    public BaseRepository(BirthdayDao birthdayDao) {
+        this.birthdayDao = birthdayDao;
     }
-   // private static Context context;
 
-   /* public BaseRepository(Context context){
-        this.context = context;
+    public List<Birthday> getAllBirthdays() {
+        return birthdayDao.getAll();
     }
 
-    public static Context getContext() {
-        return context;}*/
-
+    public void insert(final Birthday birthday) {
+        birthdayDao.insert(birthday);
+    }
 }
+
