@@ -1,10 +1,9 @@
-
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#EFCBCB</item>
+        <item name="colorPrimaryDark">#D99790</item>
+        <item name="colorAccent">#7067A9</item>
     </style>
 
     <style name="person_title">

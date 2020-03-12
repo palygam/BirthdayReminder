@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.add_new_birthday.NewBirthdayActivity"></activity>
+        <activity android:name=".ui.edit_birthday.EditBirthdayActivity"></activity>
+        <activity android:name=".ui.add_new_birthday.NewBirthdayActivity" />
         <activity android:name=".ui.show_database.ShowDatabaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

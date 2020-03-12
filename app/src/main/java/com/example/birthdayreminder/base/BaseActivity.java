@@ -14,7 +14,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        setView();
         setupToolbar();
     }
 
@@ -23,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public void setView(){}
+   // public void setView(){}
 
     protected abstract int getLayoutId();
 

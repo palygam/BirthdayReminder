@@ -1,15 +1,14 @@
 <resources>
     <string name="app_name">BirthdayReminder</string>
-    <string name="button_new_input">Create New Birthday Notification</string>
-    <string name="button_show_birthdays_list">Upcoming </string>
-    <string name="text_input_last_name">Enter Last Name </string>
-    <string name="text_input_first_name">Enter First Name </string>
-    <string name="text_input_birthday">Enter Birthday Date </string>
-    <string name="button_send_to_database">Create Notification! </string>
-    <string name="no_information">No information </string>
+    <string name="text_input_last_name">Фамилия</string>
+    <string name="text_input_first_name">Имя</string>
+    <string name="text_input_age">Дата рождения</string>
+    <string name="button_main_activity">Сохранить</string>
+    <string name="no_information">Нет информации</string>
+    <string name="show_database_text">События контактов</string>
     <string name="add_new_birthday">Создать событие </string>
-    <string name="search_title">Поиск </string>
     <string name="settings">Настройки </string>
-
-
+    <string name="search_title">Поиск </string>
+    <string name="birthday">"День рождения: "</string>
+    <string name="button_edit">Изменить </string>
 </resources>

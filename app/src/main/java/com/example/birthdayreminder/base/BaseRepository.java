@@ -1,25 +1,24 @@
 package com.example.birthdayreminder.base;
 
-import com.example.birthdayreminder.CustomApplication;
-import com.example.birthdayreminder.data.AppDatabase;
-import com.example.birthdayreminder.data.database.BirthdayDao;
-import com.example.birthdayreminder.data.model.Birthday;
+
+import com.example.birthdayreminder.data.database.ContactDao;
+import com.example.birthdayreminder.data.model.Contact;
 
 import java.util.List;
 
 public class BaseRepository {
-    private BirthdayDao birthdayDao;
+    private ContactDao contactDao;
 
-    public BaseRepository(BirthdayDao birthdayDao) {
-        this.birthdayDao = birthdayDao;
+    public BaseRepository(ContactDao contactDao) {
+        this.contactDao = contactDao;
     }
 
-    public List<Birthday> getAllBirthdays() {
-        return birthdayDao.getAll();
+    public List<Contact> getAllBirthdays() {
+        return contactDao.getAll();
     }
 
-    public void insert(final Birthday birthday) {
-        birthdayDao.insert(birthday);
+    public void insert (final Contact contact) {
+        contactDao.insert(contact);
     }
 }
 

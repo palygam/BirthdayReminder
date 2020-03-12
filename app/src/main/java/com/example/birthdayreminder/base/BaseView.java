@@ -1,5 +1,7 @@
 package com.example.birthdayreminder.base;
 
-public interface BaseView {
+import android.content.Context;
 
+public interface BaseView {
+    void showNewScreen(Context context, Class nextActivity);
 }

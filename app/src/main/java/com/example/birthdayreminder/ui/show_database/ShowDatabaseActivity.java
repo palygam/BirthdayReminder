@@ -1,7 +1,7 @@
 package com.example.birthdayreminder.ui.show_database;
-import android.content.Intent;
+
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
@@ -12,19 +12,23 @@ import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.base.BaseView;
+
 import com.example.birthdayreminder.ui.add_new_birthday.NewBirthdayActivity;
 
 public class ShowDatabaseActivity extends BaseActivity implements BaseView {
-    private ShowDatabaseAdapter adapter;
+    private ContactsListAdapter adapter;
     private BasePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+      //  presenter.attachView(this);
         presenter = new ShowDatabasePresenter(this, adapter);
-        setView();
+        initRecyclerView();
+        setupToolbar();
         presenter.loadBirthdaysList();
+
     }
 
     @Override
@@ -47,7 +51,7 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_notification_menu:
-                startActivity(new Intent(ShowDatabaseActivity.this, NewBirthdayActivity.class));
+                showNewScreen(this, NewBirthdayActivity.class);
                 return true;
             case R.id.settings:
             default:
@@ -55,9 +59,9 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
         }
     }
 
-    @Override
-    public void setView() {
-        adapter = new ShowDatabaseAdapter(ShowDatabaseActivity.this);
+
+    public void initRecyclerView() {
+        adapter = new ContactsListAdapter(ShowDatabaseActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -68,4 +72,10 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
         super.onDestroy();
         presenter.onDestroy();
     }
+
+    @Override
+    public void showNewScreen(Context context, Class nextActivity) {
+        presenter.onMenuClicked(context, nextActivity);
+    }
+
 }
