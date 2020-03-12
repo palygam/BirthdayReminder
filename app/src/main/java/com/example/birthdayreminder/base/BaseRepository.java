@@ -7,6 +7,7 @@ import com.example.birthdayreminder.data.model.Contact;
 import java.util.List;
 
 public class BaseRepository {
+
     private ContactDao contactDao;
 
     public BaseRepository(ContactDao contactDao) {

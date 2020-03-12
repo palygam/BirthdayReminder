@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Contact;
 
-public class ShowDatabaseActivityView implements BaseView {
+public class ShowEventsActivityView implements BaseView {
 
     @Override
     public void launchEditBirthdayActivity(Context context, Class nextActivity, Contact contact) {

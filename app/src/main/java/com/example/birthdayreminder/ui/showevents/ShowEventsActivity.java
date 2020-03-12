@@ -21,7 +21,7 @@ import com.example.birthdayreminder.ui.Constants;
 import com.example.birthdayreminder.ui.editevent.EditBirthdayActivity;
 import com.example.birthdayreminder.ui.newevent.NewBirthdayActivity;
 
-public class ShowDatabaseActivity extends BaseActivity implements BaseView {
+public class ShowEventsActivity extends BaseActivity implements BaseView {
     private ContactsListAdapter adapter;
     private BasePresenter presenter;
 
@@ -30,14 +30,14 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initRecyclerView();
-        presenter = new ShowDatabasePresenter(this, adapter);
+        presenter = new ShowEventsPresenter(this, adapter);
         setupToolbar();
         presenter.loadBirthdaysList();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_show_database;
+        return R.layout.activity_show_events;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_notification_menu:
-                presenter.onMenuClicked(ShowDatabaseActivity.this, NewBirthdayActivity.class);
+                presenter.onMenuClicked(ShowEventsActivity.this, NewBirthdayActivity.class);
                 return true;
             case R.id.settings:
             default:
@@ -64,18 +64,18 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
     }
 
     public void initRecyclerView() {
-        adapter = new ContactsListAdapter(ShowDatabaseActivity.this);
+        adapter = new ContactsListAdapter(ShowEventsActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(ShowDatabaseActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(ShowEventsActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Contact contact = adapter.getContactAtPosition(position);
-                        presenter.onClickRecyclerView(ShowDatabaseActivity.this, EditBirthdayActivity.class, contact);
+                        presenter.onClickRecyclerView(ShowEventsActivity.this, EditBirthdayActivity.class, contact);
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ShowDatabaseActivity.this);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ShowEventsActivity.this);
                         alert.setTitle( getResources().getString(R.string.alert_title));
                         alert.setPositiveButton(getResources().getString(R.string.positive_button), (dialog, whichButton) -> {
                             Contact contact = adapter.getContactAtPosition(position);

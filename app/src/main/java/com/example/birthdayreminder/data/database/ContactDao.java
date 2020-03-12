@@ -16,9 +16,6 @@ public interface ContactDao {
     @Query("SELECT * FROM table_contacts")
     List<Contact> getAll();
 
-    @Query("SELECT name FROM table_contacts")
-    List<String> getFirstNames();
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Contact contact);
 

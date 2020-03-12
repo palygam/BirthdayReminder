@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ShowDatabasePresenter<T extends BaseView> implements BasePresenter {
+public class ShowEventsPresenter<T extends BaseView> implements BasePresenter {
     private ContactsListAdapter adapter;
     private BaseView view;
     private List<Contact> contacts = new ArrayList<>();
 
-    public ShowDatabasePresenter(BaseView view, ContactsListAdapter adapter) {
+    public ShowEventsPresenter(BaseView view, ContactsListAdapter adapter) {
         this.view = view;
         this.adapter = adapter;
     }
