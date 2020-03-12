@@ -26,12 +26,12 @@ public interface ContactDao {
     void deleteAll();
 
     @Query("UPDATE table_contacts SET name = :name, last_name = :lastName, birthday = :dateOfBirth WHERE id =:id")
-    void update (String name, String lastName, long dateOfBirth, int id);
+    void update(String name, String lastName, long dateOfBirth, int id);
 
     @Delete
     void deleteBirthday(Contact contact);
 
     @Query("SELECT * FROM table_contacts ORDER BY birthday DESC Limit 1")
-    List <Contact> getAllSorted();
+    List<Contact> getAllSorted();
 
 }

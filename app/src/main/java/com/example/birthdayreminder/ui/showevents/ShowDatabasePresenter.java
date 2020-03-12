@@ -1,4 +1,4 @@
-package com.example.birthdayreminder.ui.show_database;
+package com.example.birthdayreminder.ui.showevents;
 
 import android.content.Context;
 import android.os.Handler;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ShowDatabasePresenter <T extends BaseView> implements BasePresenter {
+public class ShowDatabasePresenter<T extends BaseView> implements BasePresenter {
     private ContactsListAdapter adapter;
     private BaseView view;
     private List<Contact> contacts = new ArrayList<>();
@@ -23,12 +23,6 @@ public class ShowDatabasePresenter <T extends BaseView> implements BasePresenter
         this.view = view;
         this.adapter = adapter;
     }
-
-
-  /*  @Override
-    public void attachView(BaseView baseView) {
-        this.view = baseView;
-    }*/
 
     public void loadBirthdaysList() {
         final Handler handler = new Handler();
@@ -43,9 +37,27 @@ public class ShowDatabasePresenter <T extends BaseView> implements BasePresenter
         view.showNewScreen(context, nextActivity);
     }
 
+    public void onClickRecyclerView(Context context, Class nextActivity, Contact contact) {
+        view.launchEditBirthdayActivity(context, nextActivity, contact);
+    }
+
+    @Override
+    public void updateContact(String firstName, String lastName, long date, int id) {
+
+    }
+
+    public void onClickPositiveButton(int position, Contact contact) {
+        contacts.remove(position);
+        final Handler handler = new Handler();
+        Thread backgroundThread = new Thread(() -> {
+            CustomApplication.getRepository().delete(contact);
+            handler.post(() -> adapter.setContacts(contacts));
+        });
+        backgroundThread.start();
+    }
+
     @Override
     public void insertContacts(Contact contact, ProgressBar progressBar) {
-
     }
 
     @Override
@@ -54,7 +66,5 @@ public class ShowDatabasePresenter <T extends BaseView> implements BasePresenter
 
     @Override
     public void onClick(Context context, Class newActivity) {
-
     }
-
 }

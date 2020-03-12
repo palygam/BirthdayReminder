@@ -31,14 +31,6 @@ public class Contact {
         this.dateOfBirth = dateOfBirth;
     }
 
- /*   @Ignore
-    public Contact(int id, @NonNull String name, @NonNull String lastName, long dateOfBirth) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-    }
-*/
     public int getId() {
         return id;
     }

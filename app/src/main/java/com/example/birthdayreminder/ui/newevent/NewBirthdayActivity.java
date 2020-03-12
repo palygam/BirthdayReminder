@@ -1,24 +1,30 @@
-package com.example.birthdayreminder.ui.add_new_birthday;
+package com.example.birthdayreminder.ui.newevent;
 
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.base.BasePresenter;
+import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Contact;
-import com.example.birthdayreminder.ui.show_database.ShowDatabaseActivity;
+import com.example.birthdayreminder.ui.showevents.ShowDatabaseActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.Calendar;
 import java.util.Locale;
 
-public class NewBirthdayActivity extends BaseActivity {
+public class NewBirthdayActivity extends BaseActivity implements BaseView {
     private BasePresenter presenter;
     private Contact contact;
     private ProgressBar progressBar;
@@ -37,18 +43,19 @@ public class NewBirthdayActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        presenter = new NewBirthdayActivityPresenter();
+        presenter = new NewBirthdayActivityPresenter(this);
         progressBar = findViewById(R.id.progress_bar);
         lastNameWrapper = findViewById(R.id.last_name_wrapper);
         birthdayWrapper = findViewById(R.id.age_wrapper);
         textInputLastName = findViewById(R.id.text_input_last_name);
         textInputFirstName = findViewById(R.id.text_input_first_name);
+        setupToolbar();
         setDatePicker();
         setButton();
     }
 
     private void setDatePicker() {
-        textInputBirthday = findViewById(R.id.text_input_age);
+        textInputBirthday = findViewById(R.id.text_input_birthday);
         textInputBirthday.setShowSoftInputOnFocus(false);
         Locale locale = getResources().getConfiguration().locale;
         Locale.setDefault(locale);
@@ -85,7 +92,7 @@ public class NewBirthdayActivity extends BaseActivity {
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
             contact = new Contact(firstName, lastName, date);
             presenter.insertContacts(contact, progressBar);
-            presenter.onClick(NewBirthdayActivity.this,ShowDatabaseActivity.class);
+            presenter.onClick(NewBirthdayActivity.this, ShowDatabaseActivity.class);
         });
 
     }
@@ -104,5 +111,25 @@ public class NewBirthdayActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_new_birthday;
+    }
+
+    @Override
+    public void launchEditBirthdayActivity(Context context, Class nextActivity, Contact contact) {
+    }
+
+    @Override
+    public void showNewScreen(Context context, Class nextActivity) {
+        Intent intent = new Intent(context, nextActivity);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

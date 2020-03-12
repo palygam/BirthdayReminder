@@ -20,5 +20,11 @@ public class BaseRepository {
     public void insert (final Contact contact) {
         contactDao.insert(contact);
     }
+
+    public void delete (final Contact contact) {contactDao.deleteBirthday(contact);}
+
+    public void update (String name, String lastName, long dateOfBirth, int id){
+        contactDao.update(name,lastName,dateOfBirth,id);
+    }
 }
 

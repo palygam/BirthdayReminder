@@ -1,15 +1,15 @@
 package com.example.birthdayreminder.base;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.birthdayreminder.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    BaseView view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,12 +17,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupToolbar();
     }
 
-    public void setupToolbar(){
+    public void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
-   // public void setView(){}
 
     protected abstract int getLayoutId();
 
@@ -42,5 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }}
+        }
+    }
 }

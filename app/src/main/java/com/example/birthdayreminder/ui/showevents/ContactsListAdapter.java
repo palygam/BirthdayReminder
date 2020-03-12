@@ -1,13 +1,17 @@
-package com.example.birthdayreminder.ui.show_database;
+package com.example.birthdayreminder.ui.showevents;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.data.model.Contact;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.contactAgeView.setText(date);
         } else {
             holder.contactNameView.setText(context.getResources().getString(R.string.no_information));
+            holder.contactLastNameView.setText(context.getResources().getString(R.string.no_information));
             holder.contactAgeView.setText(context.getResources().getString(R.string.no_information));
         }
     }

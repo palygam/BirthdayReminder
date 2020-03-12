@@ -62,13 +62,17 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_age"
+            android:id="@+id/text_input_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
     <Button
         android:id="@+id/button_send"
         android:layout_width="wrap_content"
@@ -81,5 +85,8 @@
         style="@android:style/Widget.ProgressBar.Small.Inverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+       />
+    </LinearLayout>
+
 </LinearLayout>
