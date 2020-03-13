@@ -20,6 +20,7 @@ import java.util.List;
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
     private Context context;
     private List<Event> events = new ArrayList<>();
+    private OnItemClickListener itemClickListener;
 
     public void setEvents(@NonNull List<Event> events) {
         this.events = events;
@@ -60,6 +61,11 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         return events.size();
     }
 
+    public void SetOnItemClickListener(final OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         final TextView contactNameView;
         final TextView contactLastNameView;
@@ -71,8 +77,23 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             contactNameView = itemView.findViewById(R.id.name_text_view);
             contactAgeView = itemView.findViewById(R.id.age_text_view);
             contactLastNameView = itemView.findViewById(R.id.last_name_text_view);
+
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onClick(itemView, getAdapterPosition());
+
+                }
+            });
+
+            itemView.setOnLongClickListener(itemView1 -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onLongClick(itemView1, getAdapterPosition());
+                }
+                return false;
+            });
         }
     }
+
 
     public Event getContactAtPosition(int position) {
         return events.get(position);

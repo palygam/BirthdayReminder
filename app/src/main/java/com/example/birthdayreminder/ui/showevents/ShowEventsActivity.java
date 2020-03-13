@@ -75,32 +75,30 @@ public class ShowEventsActivity extends BaseActivity implements ShowEventsActivi
     public void initRecyclerView() {
         adapter = new ContactsListAdapter(ShowEventsActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(ShowEventsActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Event event = adapter.getContactAtPosition(position);
-                        presenter.onClickRecyclerView(ShowEventsActivity.this, EditEventActivity.class, event);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ShowEventsActivity.this);
-                        alert.setTitle(getResources().getString(R.string.alert_title));
-                        alert.setPositiveButton(getResources().getString(R.string.positive_button), (dialog, whichButton) -> {
-                            Event event = adapter.getContactAtPosition(position);
-                            presenter.onClickPositiveButton(position, event);
-                            recyclerView.removeViewAt(position);
-                            adapter.notifyItemRemoved(position);
-                        });
-                        alert.setNegativeButton(getResources().getString(R.string.negative_button), (dialog, whichButton) -> {
-                        });
-                        alert.show();
-                    }
-                })
-        );
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        adapter.SetOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(View itemView, int position) {
+                Event event = adapter.getContactAtPosition(position);
+                presenter.onClickRecyclerView(ShowEventsActivity.this, EditEventActivity.class, event);
+            }
+
+            @Override
+            public void onLongClick(View itemView, int position) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ShowEventsActivity.this);
+                alert.setTitle(getResources().getString(R.string.alert_title));
+                alert.setPositiveButton(getResources().getString(R.string.positive_button), (dialog, whichButton) -> {
+                    Event event = adapter.getContactAtPosition(position);
+                    presenter.onClickPositiveButton(position, event);
+                    recyclerView.removeViewAt(position);
+                    adapter.notifyItemRemoved(position);
+                });
+                alert.setNegativeButton(getResources().getString(R.string.negative_button), (dialog, whichButton) -> {
+                });
+                alert.show();
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
 
