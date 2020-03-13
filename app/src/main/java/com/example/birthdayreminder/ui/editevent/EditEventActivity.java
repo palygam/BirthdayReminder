@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
@@ -115,7 +114,7 @@ public class EditEventActivity extends BaseActivity implements EditEventActivity
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_edit_birthday;
+        return R.layout.activity_edit_event;
     }
 
     @Override

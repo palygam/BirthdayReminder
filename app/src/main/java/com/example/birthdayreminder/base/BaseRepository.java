@@ -8,7 +8,6 @@ import java.util.List;
 
 public class BaseRepository {
     private EventDao eventDao;
-
     public BaseRepository(EventDao eventDao) {
         this.eventDao = eventDao;
     }

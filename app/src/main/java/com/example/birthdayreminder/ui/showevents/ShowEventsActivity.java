@@ -15,14 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.base.BaseView;
 
 import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.example.birthdayreminder.ui.editevent.EditEventActivity;
 import com.example.birthdayreminder.ui.newevent.NewEventActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowEventsActivity extends BaseActivity implements ShowEventsActivityView {
@@ -41,7 +39,7 @@ public class ShowEventsActivity extends BaseActivity implements ShowEventsActivi
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_show_database;
+        return R.layout.activity_show_events;
     }
 
     @Override

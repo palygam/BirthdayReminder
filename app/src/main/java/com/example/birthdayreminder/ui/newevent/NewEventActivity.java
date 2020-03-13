@@ -18,8 +18,6 @@ import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Locale;
-
 public class NewEventActivity extends BaseActivity implements NewEventActivityView {
     private NewEventActivityPresenter presenter;
     private Event event;
@@ -92,7 +90,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_new_birthday;
+        return R.layout.activity_new_event;
     }
 
     @Override

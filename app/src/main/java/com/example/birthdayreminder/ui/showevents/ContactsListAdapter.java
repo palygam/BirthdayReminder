@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.data.model.Event;
-import com.example.birthdayreminder.ui.editevent.EditEventActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import java.util.List;
 
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
-    ShowEventsPresenter presenter;
     private Context context;
     private List<Event> events = new ArrayList<>();
 
