@@ -7,28 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.base.BasePresenter;
-import com.example.birthdayreminder.base.BaseView;
-import com.example.birthdayreminder.data.model.Contact;
-import com.example.birthdayreminder.ui.showevents.ShowDatabaseActivity;
+import com.example.birthdayreminder.data.model.Event;
+import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Calendar;
 import java.util.Locale;
 
-public class NewBirthdayActivity extends BaseActivity implements BaseView {
-    private BasePresenter presenter;
-    private Contact contact;
+public class NewEventActivity extends BaseActivity implements NewEventActivityView {
+    private NewEventActivityPresenter presenter;
+    private Event event;
     private ProgressBar progressBar;
-    private DatePickerDialog datePicker;
     private TextInputEditText textInputLastName;
     private TextInputEditText textInputFirstName;
     private TextInputEditText textInputBirthday;
@@ -43,7 +38,11 @@ public class NewBirthdayActivity extends BaseActivity implements BaseView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        presenter = new NewBirthdayActivityPresenter(this);
+        initComponents();
+    }
+
+    public void initComponents() {
+        presenter = new NewEventActivityPresenter(this);
         progressBar = findViewById(R.id.progress_bar);
         lastNameWrapper = findViewById(R.id.last_name_wrapper);
         birthdayWrapper = findViewById(R.id.age_wrapper);
@@ -54,25 +53,20 @@ public class NewBirthdayActivity extends BaseActivity implements BaseView {
         setButton();
     }
 
+    @Override
+    public void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        }
+    }
+
     private void setDatePicker() {
         textInputBirthday = findViewById(R.id.text_input_birthday);
-        textInputBirthday.setShowSoftInputOnFocus(false);
-        Locale locale = getResources().getConfiguration().locale;
-        Locale.setDefault(locale);
-        textInputBirthday.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH);
-            int year = calendar.get(Calendar.YEAR);
-            datePicker = new DatePickerDialog(NewBirthdayActivity.this,
-                    (view, year1, monthOfYear, dayOfMonth) -> {
-                        calendar.set(year1, monthOfYear, dayOfMonth);
-                        String dateOfBirth = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
-                        textInputBirthday.setText(dateOfBirth);
-                        date = calendar.getTimeInMillis();
-                    }, year, month, day);
-            datePicker.show();
-        });
+        textInputBirthday.setOnClickListener(v -> presenter.onDateClicked());
     }
 
     private void setButton() {
@@ -90,22 +84,10 @@ public class NewBirthdayActivity extends BaseActivity implements BaseView {
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            contact = new Contact(firstName, lastName, date);
-            presenter.insertContacts(contact, progressBar);
-            presenter.onClick(NewBirthdayActivity.this, ShowDatabaseActivity.class);
+            event = new Event(firstName, lastName, date);
+            presenter.insertContacts(event, progressBar);
+            presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
-
-    }
-
-    @Override
-    public void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        }
     }
 
     @Override
@@ -114,11 +96,20 @@ public class NewBirthdayActivity extends BaseActivity implements BaseView {
     }
 
     @Override
-    public void launchEditBirthdayActivity(Context context, Class nextActivity, Contact contact) {
+    public void displayDatePickerDialog(int year, int month, int day) {
+        DatePickerDialog datePicker = new DatePickerDialog(NewEventActivity.this, (view, year1, monthOfYear, dayOfMonth) -> {
+            presenter.onDateSet(year1, monthOfYear, dayOfMonth);
+            date = presenter.onCalendarSet(year1, monthOfYear, dayOfMonth).getTimeInMillis();
+        }, year, month, day);
+        datePicker.show();
     }
 
     @Override
-    public void showNewScreen(Context context, Class nextActivity) {
+    public void setDateText(String date) {
+        textInputBirthday.setText(date);
+    }
+
+    public void navigateToNewActivity(Context context, Class nextActivity) {
         Intent intent = new Intent(context, nextActivity);
         context.startActivity(intent);
     }

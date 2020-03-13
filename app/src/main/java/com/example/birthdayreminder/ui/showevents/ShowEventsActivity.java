@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -13,24 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.base.BaseView;
 
-import com.example.birthdayreminder.data.model.Contact;
+import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
-import com.example.birthdayreminder.ui.editevent.EditBirthdayActivity;
-import com.example.birthdayreminder.ui.newevent.NewBirthdayActivity;
+import com.example.birthdayreminder.ui.editevent.EditEventActivity;
+import com.example.birthdayreminder.ui.newevent.NewEventActivity;
 
-public class ShowDatabaseActivity extends BaseActivity implements BaseView {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShowEventsActivity extends BaseActivity implements ShowEventsActivityView {
     private ContactsListAdapter adapter;
-    private BasePresenter presenter;
+    private ShowEventsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initRecyclerView();
-        presenter = new ShowDatabasePresenter(this, adapter);
+        presenter = new ShowEventsPresenter(this);
         setupToolbar();
         presenter.loadBirthdaysList();
     }
@@ -51,11 +55,18 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
         }
     }
 
-    @Override
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.user_menu, menu);
+        return true;
+    }
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_notification_menu:
-                presenter.onMenuClicked(ShowDatabaseActivity.this, NewBirthdayActivity.class);
+                presenter.onMenuClicked(ShowEventsActivity.this, NewEventActivity.class);
                 return true;
             case R.id.settings:
             default:
@@ -64,22 +75,23 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
     }
 
     public void initRecyclerView() {
-        adapter = new ContactsListAdapter(ShowDatabaseActivity.this);
+        adapter = new ContactsListAdapter(ShowEventsActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(ShowDatabaseActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(ShowEventsActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Contact contact = adapter.getContactAtPosition(position);
-                        presenter.onClickRecyclerView(ShowDatabaseActivity.this, EditBirthdayActivity.class, contact);
+                        Event event = adapter.getContactAtPosition(position);
+                        presenter.onClickRecyclerView(ShowEventsActivity.this, EditEventActivity.class, event);
                     }
+
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ShowDatabaseActivity.this);
-                        alert.setTitle( getResources().getString(R.string.alert_title));
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ShowEventsActivity.this);
+                        alert.setTitle(getResources().getString(R.string.alert_title));
                         alert.setPositiveButton(getResources().getString(R.string.positive_button), (dialog, whichButton) -> {
-                            Contact contact = adapter.getContactAtPosition(position);
-                            presenter.onClickPositiveButton(position, contact);
+                            Event event = adapter.getContactAtPosition(position);
+                            presenter.onClickPositiveButton(position, event);
                             recyclerView.removeViewAt(position);
                             adapter.notifyItemRemoved(position);
                         });
@@ -93,20 +105,21 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
         recyclerView.setAdapter(adapter);
     }
 
+
     @Override
-    public  void launchEditBirthdayActivity(Context context, Class nextActivity, Contact contact){
-        Intent intent = new Intent(context, nextActivity );
+    public void launchEditBirthdayActivity(Context context, Class nextActivity, Event event) {
+        Intent intent = new Intent(context, nextActivity);
         Bundle extras = new Bundle();
-        extras.putInt(Constants.ID_KEY, contact.getId());
-        extras.putString(Constants.FIRST_NAME_KEY,contact.getName());
-        extras.putString(Constants.LAST_NAME_KEY, contact.getLastName());
-        extras.putLong(Constants.BIRTHDAY_KEY, contact.getDateOfBirth());
+        extras.putInt(Constants.ID_KEY, event.getId());
+        extras.putString(Constants.FIRST_NAME_KEY, event.getName());
+        extras.putString(Constants.LAST_NAME_KEY, event.getLastName());
+        extras.putLong(Constants.BIRTHDAY_KEY, event.getDateOfBirth());
         intent.putExtras(extras);
         startActivity(intent);
     }
 
     @Override
-    public void showNewScreen(Context context, Class nextActivity) {
+    public void navigateToNewActivity(Context context, Class nextActivity) {
         Intent intent = new Intent(context, nextActivity);
         startActivity(intent);
     }
@@ -117,6 +130,11 @@ public class ShowDatabaseActivity extends BaseActivity implements BaseView {
 
     @Override
     public void hideProgressBar() {
+    }
+
+    @Override
+    public void setEvents(List<Event> events) {
+        adapter.setEvents(events);
     }
 
     @Override

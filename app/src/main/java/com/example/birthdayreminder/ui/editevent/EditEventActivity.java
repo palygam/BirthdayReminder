@@ -11,22 +11,18 @@ import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.base.BasePresenter;
-import com.example.birthdayreminder.base.BaseView;
-import com.example.birthdayreminder.data.model.Contact;
+import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
-import com.example.birthdayreminder.ui.showevents.ShowDatabaseActivity;
+import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-public class EditBirthdayActivity extends BaseActivity implements BaseView {
+public class EditEventActivity extends BaseActivity implements EditEventActivityView {
     private ProgressBar progressBar;
-    private BasePresenter presenter;
-    private DatePickerDialog datePicker;
+    private EditEventActivityPresenter presenter;
     private TextInputEditText textEditLastName;
     private TextInputEditText textEditFirstName;
     private TextInputEditText textEditBirthday;
@@ -42,12 +38,12 @@ public class EditBirthdayActivity extends BaseActivity implements BaseView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        presenter = new EditBirthdayActivityPresenter(this);
-        setupToolbar();
-        setView();
+        initComponents();
     }
 
-    public void setView() {
+    public void initComponents(){
+        presenter = new EditEventActivityPresenter(this);
+        setupToolbar();
         progressBar = findViewById(R.id.progress_bar);
         textEditLastName = findViewById(R.id.text_input_last_name);
         textEditFirstName = findViewById(R.id.text_input_first_name);
@@ -73,21 +69,7 @@ public class EditBirthdayActivity extends BaseActivity implements BaseView {
     }
 
     private void setDatePicker() {
-        textEditBirthday.setShowSoftInputOnFocus(false);
-        textEditBirthday.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH);
-            int year = calendar.get(Calendar.YEAR);
-            datePicker = new DatePickerDialog(EditBirthdayActivity.this,
-                    (view, year1, monthOfYear, dayOfMonth) -> {
-                        calendar.set(year1, monthOfYear, dayOfMonth);
-                        String dateOfBirth = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
-                        textEditBirthday.setText(dateOfBirth);
-                        date = calendar.getTimeInMillis();
-                    }, year, month, day);
-            datePicker.show();
-        });
+        textEditBirthday.setOnClickListener(v -> presenter.onDateClicked());
     }
 
     private void setEditButton() {
@@ -106,12 +88,27 @@ public class EditBirthdayActivity extends BaseActivity implements BaseView {
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
             presenter.updateContact(firstName, lastName, date, id);
-            presenter.onMenuClicked(EditBirthdayActivity.this, ShowDatabaseActivity.class);
+            presenter.onMenuClicked(EditEventActivity.this, ShowEventsActivity.class);
         });
     }
 
+
     @Override
-    public void showNewScreen(Context context, Class nextActivity) {
+    public void displayDatePickerDialog(int year, int month, int day){
+        DatePickerDialog datePicker = new DatePickerDialog(EditEventActivity.this, (view, year1, monthOfYear, dayOfMonth) -> {
+            presenter.onDateSet(year1, monthOfYear, dayOfMonth);
+            date = presenter.onCalendarSet(year1, monthOfYear, dayOfMonth).getTimeInMillis();
+        }, year, month, day);
+        datePicker.show();
+    }
+
+    @Override
+    public void setDateText (String date){
+        textEditBirthday.setText(date);
+    }
+
+    @Override
+    public void navigateToNewActivity(Context context, Class nextActivity) {
         Intent intent = new Intent(context, nextActivity);
         startActivity(intent);
     }
@@ -119,10 +116,6 @@ public class EditBirthdayActivity extends BaseActivity implements BaseView {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_edit_birthday;
-    }
-
-    @Override
-    public void launchEditBirthdayActivity(Context context, Class nextActivity, Contact contact) {
     }
 
     @Override

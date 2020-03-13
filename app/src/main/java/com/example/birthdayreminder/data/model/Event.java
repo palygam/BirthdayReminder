@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 
-@Entity(tableName = "table_contacts")
-public class Contact {
+@Entity(tableName = "table_events")
+public class Event {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -25,7 +25,7 @@ public class Contact {
     private long dateOfBirth;
 
 
-    public Contact(@NonNull String name, String lastName, long dateOfBirth) {
+    public Event(@NonNull String name, String lastName, long dateOfBirth) {
         this.name = name;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

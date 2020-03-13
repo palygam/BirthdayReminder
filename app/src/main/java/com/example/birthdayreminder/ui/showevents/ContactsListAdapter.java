@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
-import com.example.birthdayreminder.data.model.Contact;
+import com.example.birthdayreminder.data.model.Event;
+import com.example.birthdayreminder.ui.editevent.EditEventActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ import java.util.List;
 
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
+    ShowEventsPresenter presenter;
     private Context context;
-    private List<Contact> contacts = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 
-    public void setContacts(@NonNull List<Contact> contacts) {
-        this.contacts = contacts;
+    public void setEvents(@NonNull List<Event> events) {
+        this.events = events;
         notifyDataSetChanged();
     }
 
@@ -40,13 +42,13 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
-        Contact currentContact = contacts.get(position);
-        if (currentContact != null) {
+        Event currentEvent = events.get(position);
+        if (currentEvent != null) {
             String date = context.getResources().getString(R.string.birthday);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
-            date = date.concat(simpleDateFormat.format(currentContact.getDateOfBirth()));
-            holder.contactNameView.setText(currentContact.getName());
-            holder.contactLastNameView.setText(currentContact.getLastName());
+            date = date.concat(simpleDateFormat.format(currentEvent.getDateOfBirth()));
+            holder.contactNameView.setText(currentEvent.getName());
+            holder.contactLastNameView.setText(currentEvent.getLastName());
             holder.contactAgeView.setText(date);
         } else {
             holder.contactNameView.setText(context.getResources().getString(R.string.no_information));
@@ -57,7 +59,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return events.size();
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -74,8 +76,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         }
     }
 
-    public Contact getContactAtPosition(int position) {
-        return contacts.get(position);
+    public Event getContactAtPosition(int position) {
+        return events.get(position);
     }
 }
 
