@@ -1,9 +1,11 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#EFCBCB</item>
-        <item name="colorPrimaryDark">#D99790</item>
-        <item name="colorAccent">#7067A9</item>
+        <item name="colorPrimary">#ff8f00</item>
+        <item name="colorPrimaryDark">#c56000</item>
+        <item name="colorAccent">#8398b5</item>
+        <item name="android:textColorPrimary">#474747</item>
+
     </style>
 
     <style name="person_title">

@@ -13,7 +13,7 @@ public class BaseRepository {
     }
 
     public List<Event> getAllBirthdays() {
-        return eventDao.getAll();
+        return eventDao.getAllSorted();
     }
 
     public void insert (final Event event) {
@@ -23,8 +23,8 @@ public class BaseRepository {
     public void delete (final Event event) {
         eventDao.deleteBirthday(event);}
 
-    public void update (String name, String lastName, long dateOfBirth, int id){
-        eventDao.update(name,lastName,dateOfBirth,id);
+    public void update (String name, String lastName, long dateOfBirth, long daysLeft, int id){
+        eventDao.update(name,lastName,dateOfBirth, daysLeft, id);
     }
 }
 

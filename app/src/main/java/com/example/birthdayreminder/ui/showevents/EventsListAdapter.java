@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
+public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ContactViewHolder> {
     private Context context;
     private List<Event> events = new ArrayList<>();
     private OnItemClickListener itemClickListener;
@@ -27,7 +27,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         notifyDataSetChanged();
     }
 
-    public ContactsListAdapter(Context context) {
+    public EventsListAdapter(Context context) {
         this.context = context;
     }
 
@@ -43,16 +43,27 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         Event currentEvent = events.get(position);
         if (currentEvent != null) {
+            String birthdayEvent;
             String date = context.getResources().getString(R.string.birthday);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
             date = date.concat(simpleDateFormat.format(currentEvent.getDateOfBirth()));
+            long daysLeft = currentEvent.getDaysLeft();
+            if (daysLeft == 0) {
+                birthdayEvent = (context.getResources().getString(R.string.today));
+            } else {
+                birthdayEvent = (context.getResources().getString(R.string.days_countdown));
+                birthdayEvent = birthdayEvent.concat(String.valueOf(daysLeft));
+            }
+
             holder.contactNameView.setText(currentEvent.getName());
             holder.contactLastNameView.setText(currentEvent.getLastName());
-            holder.contactAgeView.setText(date);
+            holder.contactDateView.setText(date);
+            holder.numberOfDaysView.setText(birthdayEvent);
         } else {
             holder.contactNameView.setText(context.getResources().getString(R.string.no_information));
             holder.contactLastNameView.setText(context.getResources().getString(R.string.no_information));
-            holder.contactAgeView.setText(context.getResources().getString(R.string.no_information));
+            holder.contactDateView.setText(context.getResources().getString(R.string.no_information));
+            holder.numberOfDaysView.setText(context.getResources().getString(R.string.no_information));
         }
     }
 
@@ -69,14 +80,16 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         final TextView contactNameView;
         final TextView contactLastNameView;
-        final TextView contactAgeView;
+        final TextView contactDateView;
+        final TextView numberOfDaysView;
 
 
         public ContactViewHolder(View itemView) {
             super(itemView);
             contactNameView = itemView.findViewById(R.id.name_text_view);
-            contactAgeView = itemView.findViewById(R.id.age_text_view);
+            contactDateView = itemView.findViewById(R.id.birthday_text_view);
             contactLastNameView = itemView.findViewById(R.id.last_name_text_view);
+            numberOfDaysView = itemView.findViewById(R.id.number_of_days_text_view);
 
             itemView.setOnClickListener(v -> {
                 if (itemClickListener != null) {

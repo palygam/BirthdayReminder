@@ -23,7 +23,7 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.navigateToNewActivity(context, newActivity);
     }
 
-    public void insertContacts(Event event, ProgressBar progressBar) {
+    public void insertContacts(Event event) {
         final Handler handler = new Handler();
         view.showProgressBar();
         Thread backgroundThread = new Thread(() -> {
@@ -36,6 +36,29 @@ public class NewEventActivityPresenter implements BasePresenter {
     public void onDateSet(int year, int month, int dayOfMonth) {
         String dateOfBirth = dayOfMonth + "/" + (month + 1) + "/" + year;
         view.setDateText(dateOfBirth);
+    }
+
+    public long onDaysLeft(){
+        final Calendar todayDate = Calendar.getInstance();
+        final Calendar birthdayCountdown = calendar;
+
+        final int monthOfBirthday = birthdayCountdown.get(Calendar.MONTH);
+        final int monthToday = todayDate.get(Calendar.MONTH);
+
+        final int dayOfBirthday = birthdayCountdown.get(Calendar.DAY_OF_MONTH);
+        final int dayToday = todayDate.get(Calendar.DAY_OF_MONTH);
+        birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR));
+
+        if (monthOfBirthday < monthToday) {
+            birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
+        }
+        else if (monthOfBirthday == monthToday){
+            if(dayOfBirthday < dayToday){
+                birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
+            }
+        }
+        final long daysLeft = (birthdayCountdown.getTimeInMillis() - todayDate.getTimeInMillis()) / 86400000;
+        return daysLeft;
     }
 
     public void onDateClicked() {

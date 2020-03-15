@@ -20,11 +20,12 @@ import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.example.birthdayreminder.ui.editevent.EditEventActivity;
 import com.example.birthdayreminder.ui.newevent.NewEventActivity;
+import com.example.birthdayreminder.ui.settings.SetSettingsActivity;
 
 import java.util.List;
 
 public class ShowEventsActivity extends BaseActivity implements ShowEventsActivityView {
-    private ContactsListAdapter adapter;
+    private EventsListAdapter adapter;
     private ShowEventsPresenter presenter;
 
     @Override
@@ -67,13 +68,14 @@ public class ShowEventsActivity extends BaseActivity implements ShowEventsActivi
                 presenter.onMenuClicked(ShowEventsActivity.this, NewEventActivity.class);
                 return true;
             case R.id.settings:
+                presenter.onMenuClicked(ShowEventsActivity.this, SetSettingsActivity.class);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     public void initRecyclerView() {
-        adapter = new ContactsListAdapter(ShowEventsActivity.this);
+        adapter = new EventsListAdapter(ShowEventsActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         adapter.SetOnItemClickListener(new OnItemClickListener() {

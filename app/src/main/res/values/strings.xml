@@ -14,4 +14,7 @@
     <string name="alert_title">Действительно ли Вы хотите удалить событие? </string>
     <string name="positive_button">ОК </string>
     <string name="negative_button">ОТМЕНА </string>
+    <string name="today">Сегодня </string>
+    <string name="days_countdown">"Осталось дней: "</string>
+    <string name="button_alarm">Установить уведомление</string>
 </resources>

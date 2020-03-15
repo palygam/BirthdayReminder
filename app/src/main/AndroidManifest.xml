@@ -10,8 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.editevent.EditEventActivity"></activity>
-        <activity android:name=".ui.newevent.NewEventActivity"/>
+        <activity android:name=".ui.settings.SetSettingsActivity"></activity>
+        <activity android:name=".ui.editevent.EditEventActivity" />
+        <activity android:name=".ui.newevent.NewEventActivity" />
         <activity android:name=".ui.showevents.ShowEventsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

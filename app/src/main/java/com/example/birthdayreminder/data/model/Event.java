@@ -24,11 +24,15 @@ public class Event {
     @ColumnInfo(name = "birthday")
     private long dateOfBirth;
 
+    @ColumnInfo(name = "days_left")
+    private long daysLeft;
 
-    public Event(@NonNull String name, String lastName, long dateOfBirth) {
+
+    public Event(@NonNull String name, String lastName, long dateOfBirth, long daysLeft) {
         this.name = name;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.daysLeft = daysLeft;
     }
 
     public int getId() {
@@ -61,5 +65,13 @@ public class Event {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public long getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(long daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }

@@ -25,13 +25,13 @@ public interface EventDao {
     @Query("DELETE FROM table_events")
     void deleteAll();
 
-    @Query("UPDATE table_events SET name = :name, last_name = :lastName, birthday = :dateOfBirth WHERE id =:id")
-    void update(String name, String lastName, long dateOfBirth, int id);
+    @Query("UPDATE table_events SET name = :name, last_name = :lastName, birthday = :dateOfBirth, days_left = :daysLeft WHERE id =:id")
+    void update(String name, String lastName, long dateOfBirth, long daysLeft, int id);
 
     @Delete
     void deleteBirthday(Event event);
 
-    @Query("SELECT * FROM table_events ORDER BY birthday DESC Limit 1")
+    @Query("SELECT * FROM table_events ORDER BY days_left ASC ")
     List<Event> getAllSorted();
 
 }

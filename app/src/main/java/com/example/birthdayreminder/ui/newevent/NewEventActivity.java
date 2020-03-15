@@ -30,6 +30,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private String lastName;
     private String firstName;
     private long date;
+    private long daysLeft;
 
 
     @Override
@@ -82,8 +83,9 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            event = new Event(firstName, lastName, date);
-            presenter.insertContacts(event, progressBar);
+            daysLeft = presenter.onDaysLeft();
+            event = new Event(firstName, lastName, date, daysLeft);
+            presenter.insertContacts(event);
             presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }

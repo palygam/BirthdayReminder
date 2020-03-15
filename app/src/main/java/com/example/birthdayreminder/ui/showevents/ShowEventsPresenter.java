@@ -6,8 +6,6 @@ import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Event;
-
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -30,6 +30,7 @@ public class EditEventActivity extends BaseActivity implements EditEventActivity
     private String lastName;
     private String firstName;
     private long date;
+    private long daysLeft;
     private int id;
 
 
@@ -86,7 +87,8 @@ public class EditEventActivity extends BaseActivity implements EditEventActivity
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            presenter.updateContact(firstName, lastName, date, id);
+            daysLeft = presenter.onDaysLeft();
+            presenter.updateContact(firstName, lastName, date, daysLeft, id);
             presenter.onMenuClicked(EditEventActivity.this, ShowEventsActivity.class);
         });
     }
