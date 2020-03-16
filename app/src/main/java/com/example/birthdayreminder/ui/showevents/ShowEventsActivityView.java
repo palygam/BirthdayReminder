@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ShowEventsActivityView extends BaseView {
 
-
     void launchEditBirthdayActivity(Context context, Class nextActivity, Event event);
 
     void navigateToNewActivity(Context context, Class nextActivity);

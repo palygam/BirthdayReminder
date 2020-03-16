@@ -7,20 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-
 import com.example.birthdayreminder.data.model.Event;
-import com.example.birthdayreminder.ui.Constants;
-import com.example.birthdayreminder.ui.editevent.EditEventActivity;
-import com.example.birthdayreminder.ui.newevent.NewEventActivity;
-import com.example.birthdayreminder.ui.settings.SetSettingsActivity;
 
 import java.util.List;
 
@@ -54,21 +47,17 @@ public class ShowEventsActivity extends BaseActivity implements ShowEventsActivi
         }
     }
 
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_menu, menu);
         return true;
     }
 
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_notification_menu:
-                presenter.onMenuClicked(ShowEventsActivity.this, NewEventActivity.class);
                 return true;
             case R.id.settings:
-                presenter.onMenuClicked(ShowEventsActivity.this, SetSettingsActivity.class);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -78,42 +67,12 @@ public class ShowEventsActivity extends BaseActivity implements ShowEventsActivi
         adapter = new EventsListAdapter(ShowEventsActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
-        adapter.SetOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(View itemView, int position) {
-                Event event = adapter.getContactAtPosition(position);
-                presenter.onClickRecyclerView(ShowEventsActivity.this, EditEventActivity.class, event);
-            }
-
-            @Override
-            public void onLongClick(View itemView, int position) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ShowEventsActivity.this);
-                alert.setTitle(getResources().getString(R.string.alert_title));
-                alert.setPositiveButton(getResources().getString(R.string.positive_button), (dialog, whichButton) -> {
-                    Event event = adapter.getContactAtPosition(position);
-                    presenter.onClickPositiveButton(position, event);
-                    recyclerView.removeViewAt(position);
-                    adapter.notifyItemRemoved(position);
-                });
-                alert.setNegativeButton(getResources().getString(R.string.negative_button), (dialog, whichButton) -> {
-                });
-                alert.show();
-            }
-        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
 
     @Override
     public void launchEditBirthdayActivity(Context context, Class nextActivity, Event event) {
-        Intent intent = new Intent(context, nextActivity);
-        Bundle extras = new Bundle();
-        extras.putInt(Constants.ID_KEY, event.getId());
-        extras.putString(Constants.FIRST_NAME_KEY, event.getName());
-        extras.putString(Constants.LAST_NAME_KEY, event.getLastName());
-        extras.putLong(Constants.BIRTHDAY_KEY, event.getDateOfBirth());
-        intent.putExtras(extras);
-        startActivity(intent);
     }
 
     @Override

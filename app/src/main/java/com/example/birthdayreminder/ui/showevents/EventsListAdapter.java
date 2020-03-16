@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ContactViewHolder> {
     private Context context;
     private List<Event> events = new ArrayList<>();
@@ -76,7 +75,6 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Co
         this.itemClickListener = itemClickListener;
     }
 
-
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         final TextView contactNameView;
         final TextView contactLastNameView;
@@ -106,7 +104,6 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Co
             });
         }
     }
-
 
     public Event getContactAtPosition(int position) {
         return events.get(position);

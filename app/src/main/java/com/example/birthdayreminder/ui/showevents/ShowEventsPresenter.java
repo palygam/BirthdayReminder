@@ -31,31 +31,9 @@ public class ShowEventsPresenter<T extends BaseView> implements BasePresenter {
     }
 
     public void onMenuClicked(Context context, Class nextActivity) {
-        view.navigateToNewActivity(context, nextActivity);
-    }
-
-    public void onClickRecyclerView(Context context, Class nextActivity, Event event) {
-        view.launchEditBirthdayActivity(context, nextActivity, event);
-    }
-
-
-    public void onClickPositiveButton(int position, Event event) {
-        events.remove(position);
-        final Handler handler = new Handler();
-        Thread backgroundThread = new Thread(() -> {
-            CustomApplication.getRepository().delete(event);
-            handler.post(() -> view.setEvents(events));
-        });
-        backgroundThread.start();
     }
 
     @Override
     public void onDestroy() {
     }
-
-    @Override
-    public void onClick(Context context, Class newActivity) {
-
-    }
-
 }
