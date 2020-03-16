@@ -18,7 +18,6 @@ public class NewEventActivityPresenter implements BasePresenter {
         this.view = view;
     }
 
-    @Override
     public void onClick(Context context, Class newActivity) {
         view.navigateToNewActivity(context, newActivity);
     }
@@ -74,10 +73,6 @@ public class NewEventActivityPresenter implements BasePresenter {
         return calendar;
     }
 
-    @Override
-    public void onMenuClicked(Context context, Class newActivity) {
-        view.navigateToNewActivity(context, newActivity);
-    }
 
     @Override
     public void onDestroy() {

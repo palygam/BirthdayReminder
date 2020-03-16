@@ -10,11 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.data.model.Event;
-import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,7 +42,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
         presenter = new NewEventActivityPresenter(this);
         progressBar = findViewById(R.id.progress_bar);
         lastNameWrapper = findViewById(R.id.last_name_wrapper);
-        birthdayWrapper = findViewById(R.id.age_wrapper);
+        birthdayWrapper = findViewById(R.id.time_wrapper);
         textInputLastName = findViewById(R.id.text_input_last_name);
         textInputFirstName = findViewById(R.id.text_input_first_name);
         setupToolbar();
@@ -74,11 +72,11 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             lastName = textInputLastName.getText().toString();
             firstName = textInputFirstName.getText().toString();
             if (lastName.isEmpty()) {
-                lastNameWrapper.setError("Enter your Last Name");
+                lastNameWrapper.setError("Введите фамилию");
                 return;
             }
             if (TextUtils.isEmpty(textInputBirthday.getText())) {
-                birthdayWrapper.setError("Enter your Age");
+                birthdayWrapper.setError("Введите дату события");
                 return;
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
@@ -86,7 +84,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             daysLeft = presenter.onDaysLeft();
             event = new Event(firstName, lastName, date, daysLeft);
             presenter.insertContacts(event);
-            presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }
 
