@@ -1,40 +1,30 @@
-package com.example.birthdayreminder.ui.newevent;
+package com.example.birthdayreminder.ui.editevent;
 
 import android.content.Context;
 import android.os.Handler;
 
 import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.base.BasePresenter;
-import com.example.birthdayreminder.data.model.Event;
 
 import java.util.Calendar;
 
-public class NewEventActivityPresenter implements BasePresenter {
+public class EditEventActivityPresenter implements BasePresenter {
     private Calendar calendar;
-    private NewEventActivityView view;
+    private EditEventActivityView view;
 
-    public NewEventActivityPresenter(NewEventActivityView view) {
+    public EditEventActivityPresenter(EditEventActivityView view) {
         this.view = view;
     }
 
-    public void onClick(Context context, Class newActivity) {
-        view.navigateToNewActivity(context, newActivity);
-    }
-
-    public void insertContacts(Event event) {
+    public void updateContact(String name, String lastName, long date, long daysLeft, int id) {
         final Handler handler = new Handler();
         view.showProgressBar();
         Thread backgroundThread = new Thread(() -> {
-            CustomApplication.getRepository().insert(event);
-            handler.post(() -> view.hideProgressBar());
+            CustomApplication.getRepository().update(name, lastName, date, daysLeft, id);
+            handler.post(() ->
+                    view.hideProgressBar());
         });
         backgroundThread.start();
-    }
-
-
-    public void onDateSet(int year, int month, int dayOfMonth) {
-        String dateOfBirth = dayOfMonth + "/" + (month + 1) + "/" + year;
-        view.setDateText(dateOfBirth);
     }
 
     public long getDaysLeft() {
@@ -59,6 +49,11 @@ public class NewEventActivityPresenter implements BasePresenter {
         return daysLeft;
     }
 
+    public void onDateSet(int year, int month, int dayOfMonth) {
+        String dateOfBirth = dayOfMonth + "/" + (month + 1) + "/" + year;
+        view.setDateText(dateOfBirth);
+    }
+
     public void onDateClicked() {
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -70,5 +65,9 @@ public class NewEventActivityPresenter implements BasePresenter {
     public Calendar onCalendarSet(int year, int monthOfYear, int dayOfMonth) {
         calendar.set(year, monthOfYear, dayOfMonth);
         return calendar;
+    }
+
+    public void onMenuClicked(Context context, Class newActivity) {
+        view.navigateToNewActivity(context, newActivity);
     }
 }
