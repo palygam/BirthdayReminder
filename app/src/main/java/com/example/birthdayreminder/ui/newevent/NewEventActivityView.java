@@ -1,10 +1,13 @@
-package com.example.birthdayreminder.ui.editevent;
+package com.example.birthdayreminder.ui.newevent;
 
 import android.content.Context;
 
 import com.example.birthdayreminder.base.BaseView;
+import com.example.birthdayreminder.data.model.Event;
 
-public interface EditEventActivityView extends BaseView {
+import java.util.List;
+
+public interface NewEventActivityView extends BaseView {
 
     void navigateToNewActivity(Context context, Class nextActivity);
 

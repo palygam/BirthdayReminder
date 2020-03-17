@@ -48,7 +48,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/age_wrapper"
+        android:id="@+id/time_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -56,7 +56,7 @@
         android:descendantFocusability="blocksDescendants"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:hint="@string/text_input_time"
+        android:hint="@string/text_input_birthday"
         android:inputType="date|textNoSuggestions"
         android:padding="30dp"
         app:errorEnabled="true">
@@ -74,11 +74,11 @@
         android:layout_height="wrap_content"
         android:gravity="center">
         <Button
-            android:id="@+id/button_change"
+            android:id="@+id/button_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:text="@string/button_edit" />
+            android:text="@string/button_main_activity" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
