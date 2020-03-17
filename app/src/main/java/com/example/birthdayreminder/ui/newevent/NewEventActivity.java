@@ -31,6 +31,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private TextInputLayout birthdayWrapper;
     private String lastName;
     private String firstName;
+    private long birthday;
     private int id;
     private long date;
     private long daysLeft;
@@ -41,7 +42,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
         setContentView(getLayoutId());
         initComponents();
         Intent intent = getIntent();
-        if (intent!=null){
+        if (intent.getExtras()!=null){
             unpackIntent(intent);
             setDatePicker();
             setEditButton();
@@ -68,7 +69,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
         if (extras != null) {
             firstName = extras.getString(Constants.FIRST_NAME_KEY);
             lastName = extras.getString(Constants.LAST_NAME_KEY);
-            long birthday = extras.getLong(Constants.BIRTHDAY_KEY);
+            birthday = extras.getLong(Constants.BIRTHDAY_KEY);
             id = extras.getInt(Constants.ID_KEY);
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -99,6 +100,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
 
     private void setSendButton() {
         final Button buttonSendData = findViewById(R.id.button_send);
+        buttonSendData.setText(R.string.button_send);
         buttonSendData.setOnClickListener(view -> {
             lastName = textInputLastName.getText().toString();
             firstName = textInputFirstName.getText().toString();
@@ -112,10 +114,10 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            daysLeft = presenter.getDaysLeft();
+            daysLeft = presenter.getDaysLeft(date);
             Event event = new Event(firstName, lastName, date, daysLeft);
             presenter.insertContacts(event);
-            //presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }
 
@@ -135,9 +137,9 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            long daysLeft = presenter.getDaysLeft();
+            long daysLeft = presenter.getDaysLeft(birthday);
             presenter.updateContact(firstName, lastName, date, daysLeft, id);
-            //presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }
 

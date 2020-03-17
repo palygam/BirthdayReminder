@@ -4,7 +4,7 @@
     <string name="text_input_first_name">Имя</string>
     <string name="text_input_birthday">Дата рождения</string>
     <string name="text_input_time">Время отображения </string>
-    <string name="button_main_activity">Сохранить</string>
+    <string name="button_send">Сохранить</string>
     <string name="no_information">Нет информации</string>
     <string name="show_database_text">События контактов</string>
     <string name="add_new_birthday">Создать событие </string>

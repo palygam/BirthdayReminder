@@ -48,7 +48,10 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.setDateText(dateOfBirth);
     }
 
-    public long getDaysLeft() {
+    public long getDaysLeft(long date) {
+        if (calendar==null){
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(date);}
         final Calendar todayDate = Calendar.getInstance();
         final Calendar birthdayCountdown = calendar;
 
