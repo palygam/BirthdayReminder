@@ -2,7 +2,6 @@ package com.example.birthdayreminder.ui.newevent;
 
 import android.content.Context;
 import android.os.Handler;
-import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.base.BasePresenter;
@@ -32,12 +31,13 @@ public class NewEventActivityPresenter implements BasePresenter {
         backgroundThread.start();
     }
 
+
     public void onDateSet(int year, int month, int dayOfMonth) {
         String dateOfBirth = dayOfMonth + "/" + (month + 1) + "/" + year;
         view.setDateText(dateOfBirth);
     }
 
-    public long onDaysLeft(){
+    public long getDaysLeft() {
         final Calendar todayDate = Calendar.getInstance();
         final Calendar birthdayCountdown = calendar;
 
@@ -50,9 +50,8 @@ public class NewEventActivityPresenter implements BasePresenter {
 
         if (monthOfBirthday < monthToday) {
             birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
-        }
-        else if (monthOfBirthday == monthToday){
-            if(dayOfBirthday < dayToday){
+        } else if (monthOfBirthday == monthToday) {
+            if (dayOfBirthday < dayToday) {
                 birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
             }
         }
@@ -68,13 +67,8 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.displayDatePickerDialog(year, month, day);
     }
 
-    public Calendar onCalendarSet(int year1, int monthOfYear, int dayOfMonth) {
-        calendar.set(year1, monthOfYear, dayOfMonth);
+    public Calendar onCalendarSet(int year, int monthOfYear, int dayOfMonth) {
+        calendar.set(year, monthOfYear, dayOfMonth);
         return calendar;
-    }
-
-
-    @Override
-    public void onDestroy() {
     }
 }

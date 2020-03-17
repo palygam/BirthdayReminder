@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.data.model.Event;
@@ -18,18 +19,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class NewEventActivity extends BaseActivity implements NewEventActivityView {
     private NewEventActivityPresenter presenter;
-    private Event event;
     private ProgressBar progressBar;
     private TextInputEditText textInputLastName;
     private TextInputEditText textInputFirstName;
     private TextInputEditText textInputBirthday;
     private TextInputLayout lastNameWrapper;
     private TextInputLayout birthdayWrapper;
-    private String lastName;
-    private String firstName;
     private long date;
     private long daysLeft;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +66,8 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private void setButton() {
         final Button buttonSendData = findViewById(R.id.button_send);
         buttonSendData.setOnClickListener(view -> {
-            lastName = textInputLastName.getText().toString();
-            firstName = textInputFirstName.getText().toString();
+            String lastName = textInputLastName.getText().toString();
+            String firstName = textInputFirstName.getText().toString();
             if (lastName.isEmpty()) {
                 lastNameWrapper.setError("Введите фамилию");
                 return;
@@ -81,10 +78,10 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            daysLeft = presenter.onDaysLeft();
-            event = new Event(firstName, lastName, date, daysLeft);
+            daysLeft = presenter.getDaysLeft();
+            Event event = new Event(firstName, lastName, date, daysLeft);
             presenter.insertContacts(event);
-          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+            //presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }
 
