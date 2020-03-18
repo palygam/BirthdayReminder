@@ -6,7 +6,6 @@ import android.os.Handler;
 import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.data.model.Event;
-
 import java.util.Calendar;
 
 public class NewEventActivityPresenter implements BasePresenter {

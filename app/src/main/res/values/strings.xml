@@ -12,7 +12,7 @@
     <string name="search_title">Поиск </string>
     <string name="birthday">"День рождения: "</string>
     <string name="button_edit">Изменить </string>
-    <string name="alert_title">Действительно ли Вы хотите удалить событие? </string>
+    <string name="alert_title">Вы действительно хотите удалить событие? </string>
     <string name="positive_button">ОК </string>
     <string name="negative_button">ОТМЕНА </string>
     <string name="today">Сегодня </string>

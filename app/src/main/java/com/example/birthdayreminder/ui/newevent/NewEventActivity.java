@@ -17,9 +17,11 @@ import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.example.birthdayreminder.ui.newevent.ScreenType.ADD_SCREEN;
+import static com.example.birthdayreminder.ui.newevent.ScreenType.EDIT_SCREEN;
 
 public class NewEventActivity extends BaseActivity implements NewEventActivityView {
     private NewEventActivityPresenter presenter;
@@ -35,21 +37,30 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private int id;
     private long date;
     private long daysLeft;
+    //private ScreenType screenType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initComponents();
+        checkInputIntent();
+    }
+
+    public void checkInputIntent() {
+        ScreenType screenType;
         Intent intent = getIntent();
-        if (intent.getExtras()!=null){
-            unpackIntent(intent);
-            setDatePicker();
-            setEditButton();
-        }
-        else{
-            setDatePicker();
-            setSendButton();
+        screenType = ScreenType.valueOf(intent.getStringExtra(Constants.SCREEN_TYPE));
+        switch (screenType) {
+            case EDIT_SCREEN:
+                unpackIntent(intent.getExtras());
+                setDatePicker();
+                setEditButton();
+                break;
+            case ADD_SCREEN:
+                setDatePicker();
+                setSendButton();
+                break;
         }
     }
 
@@ -64,8 +75,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
         setupToolbar();
     }
 
-    private void unpackIntent(Intent intent){
-        Bundle extras = intent.getExtras();
+    private void unpackIntent(Bundle extras) {
         if (extras != null) {
             firstName = extras.getString(Constants.FIRST_NAME_KEY);
             lastName = extras.getString(Constants.LAST_NAME_KEY);
@@ -139,7 +149,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
             long daysLeft = presenter.getDaysLeft(birthday);
             presenter.updateContact(firstName, lastName, date, daysLeft, id);
-           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
         });
     }
 
@@ -150,7 +160,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
 
     @Override
     public void displayDatePickerDialog(int year, int month, int day) {
-        DatePickerDialog datePicker = new DatePickerDialog(NewEventActivity.this, (view, year1, monthOfYear, dayOfMonth) -> {
+        DatePickerDialog datePicker = new DatePickerDialog(NewEventActivity.this, R.style.DatePickerStyle, (view, year1, monthOfYear, dayOfMonth) -> {
             presenter.onDateSet(year1, monthOfYear, dayOfMonth);
             date = presenter.onCalendarSet(year1, monthOfYear, dayOfMonth).getTimeInMillis();
         }, year, month, day);
