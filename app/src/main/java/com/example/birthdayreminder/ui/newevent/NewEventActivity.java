@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 
 import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
-import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
@@ -49,8 +48,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
 
     public void checkInputIntent() {
         Intent intent = getIntent();
-        ScreenType screenType;
-        screenType = (ScreenType) intent.getSerializableExtra(Constants.SCREEN_TYPE);
+        ScreenType screenType = (ScreenType) intent.getSerializableExtra(Constants.SCREEN_TYPE);
         switch (screenType) {
             case EDIT_SCREEN:
                 unpackIntent(intent.getExtras());

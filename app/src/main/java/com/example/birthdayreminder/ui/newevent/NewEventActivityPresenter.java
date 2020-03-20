@@ -24,7 +24,7 @@ public class NewEventActivityPresenter implements BasePresenter {
     }
 
     public void insertContacts(String firstName, String lastName) {
-        getDaysLeft(date);
+        findDaysLeft(date);
         Event event = new Event(firstName, lastName, date, daysLeft);
         final Handler handler = new Handler();
         view.showProgressBar();
@@ -36,7 +36,7 @@ public class NewEventActivityPresenter implements BasePresenter {
     }
 
     public void updateContact(String name, String lastName, int id) {
-        getDaysLeft(date);
+        findDaysLeft(date);
         final Handler handler = new Handler();
         view.showProgressBar();
         Thread backgroundThread = new Thread(() -> {
@@ -53,7 +53,7 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.setDateText(dateOfBirth);
     }
 
-    public void getDaysLeft(long date) {
+    public void findDaysLeft(long date) {
         if (calendar != null) {
             calculateDaysLeft(calendar);
         } else {
