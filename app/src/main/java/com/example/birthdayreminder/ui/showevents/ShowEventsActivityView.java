@@ -1,14 +1,15 @@
-package com.example.birthdayreminder.ui.newevent;
+package com.example.birthdayreminder.ui.showevents;
 
 import android.content.Context;
 
 import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Event;
 
-import java.util.Calendar;
 import java.util.List;
 
-public interface NewEventActivityView extends BaseView {
+public interface ShowEventsActivityView extends BaseView {
+
+    void launchNewActivity(Context context, Class nextActivity, Event event, Enum screenType);
 
     void navigateToNewActivity(Context context, Class nextActivity, Enum screenType);
 
@@ -18,7 +19,5 @@ public interface NewEventActivityView extends BaseView {
     @Override
     void hideProgressBar();
 
-    void setDateText(String date);
-
-    void displayDatePickerDialog(int year, int month, int day);
+    void setEvents(List<Event> events);
 }
