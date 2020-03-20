@@ -6,6 +6,7 @@ import android.os.Handler;
 import com.example.birthdayreminder.CustomApplication;
 import com.example.birthdayreminder.base.BasePresenter;
 import com.example.birthdayreminder.data.model.Event;
+
 import java.util.Calendar;
 
 public class NewEventActivityPresenter implements BasePresenter {
@@ -16,8 +17,8 @@ public class NewEventActivityPresenter implements BasePresenter {
         this.view = view;
     }
 
-    public void onClick(Context context, Class newActivity) {
-        view.navigateToNewActivity(context, newActivity);
+    public void onClick(Context context, Class newActivity, Enum screenType) {
+        view.navigateToNewActivity(context, newActivity, screenType);
     }
 
     public void insertContacts(Event event) {
@@ -48,9 +49,19 @@ public class NewEventActivityPresenter implements BasePresenter {
     }
 
     public long getDaysLeft(long date) {
-        if (calendar==null){
+        final long daysLeft;
+        if (calendar != null) {
+            daysLeft = calculateDaysLeft(calendar);
+        } else {
             calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(date);}
+            calendar.setTimeInMillis(date);
+            daysLeft = calculateDaysLeft(calendar);
+        }
+        return daysLeft;
+    }
+
+    public long calculateDaysLeft(Calendar calendar) {
+        final long daysLeft;
         final Calendar todayDate = Calendar.getInstance();
         final Calendar birthdayCountdown = calendar;
 
@@ -68,7 +79,7 @@ public class NewEventActivityPresenter implements BasePresenter {
                 birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
             }
         }
-        final long daysLeft = (birthdayCountdown.getTimeInMillis() - todayDate.getTimeInMillis()) / 86400000;
+        daysLeft = (birthdayCountdown.getTimeInMillis() - todayDate.getTimeInMillis()) / 86400000;
         return daysLeft;
     }
 

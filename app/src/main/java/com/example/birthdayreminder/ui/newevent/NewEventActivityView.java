@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface NewEventActivityView extends BaseView {
 
-    void navigateToNewActivity(Context context, Class nextActivity);
+    void navigateToNewActivity(Context context, Class nextActivity, Enum screenType);
 
     @Override
     void showProgressBar();

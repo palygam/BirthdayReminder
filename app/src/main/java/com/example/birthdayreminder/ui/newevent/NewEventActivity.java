@@ -17,6 +17,7 @@ import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,7 +38,6 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private int id;
     private long date;
     private long daysLeft;
-    //private ScreenType screenType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +48,9 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     }
 
     public void checkInputIntent() {
-        ScreenType screenType;
         Intent intent = getIntent();
-        screenType = ScreenType.valueOf(intent.getStringExtra(Constants.SCREEN_TYPE));
+        ScreenType screenType;
+        screenType = (ScreenType) intent.getSerializableExtra(Constants.SCREEN_TYPE);
         switch (screenType) {
             case EDIT_SCREEN:
                 unpackIntent(intent.getExtras());
@@ -76,21 +76,19 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     }
 
     private void unpackIntent(Bundle extras) {
-        if (extras != null) {
-            firstName = extras.getString(Constants.FIRST_NAME_KEY);
-            lastName = extras.getString(Constants.LAST_NAME_KEY);
-            birthday = extras.getLong(Constants.BIRTHDAY_KEY);
-            id = extras.getInt(Constants.ID_KEY);
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            String dateOfBirth = simpleDateFormat.format(new Date(birthday));
-            lastNameWrapper = findViewById(R.id.last_name_wrapper);
-            birthdayWrapper = findViewById(R.id.time_wrapper);
-            textInputFirstName.setText(firstName);
-            textInputLastName.setText(lastName);
-            textInputBirthday.setText(dateOfBirth);
-            setEditButton();
-        }
+        firstName = extras.getString(Constants.FIRST_NAME_KEY);
+        lastName = extras.getString(Constants.LAST_NAME_KEY);
+        birthday = extras.getLong(Constants.BIRTHDAY_KEY);
+        id = extras.getInt(Constants.ID_KEY);
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String dateOfBirth = simpleDateFormat.format(new Date(birthday));
+        lastNameWrapper = findViewById(R.id.last_name_wrapper);
+        birthdayWrapper = findViewById(R.id.time_wrapper);
+        textInputFirstName.setText(firstName);
+        textInputLastName.setText(lastName);
+        textInputBirthday.setText(dateOfBirth);
+        setEditButton();
     }
 
     @Override
@@ -127,7 +125,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             daysLeft = presenter.getDaysLeft(date);
             Event event = new Event(firstName, lastName, date, daysLeft);
             presenter.insertContacts(event);
-           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, ADD_SCREEN);
         });
     }
 
@@ -149,7 +147,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
             long daysLeft = presenter.getDaysLeft(birthday);
             presenter.updateContact(firstName, lastName, date, daysLeft, id);
-          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class);
+           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, EDIT_SCREEN);
         });
     }
 
@@ -173,8 +171,9 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     }
 
     @Override
-    public void navigateToNewActivity(Context context, Class nextActivity) {
+    public void navigateToNewActivity(Context context, Class nextActivity, Enum screenType) {
         Intent intent = new Intent(context, nextActivity);
+        intent.putExtra(Constants.SCREEN_TYPE, screenType.name());
         context.startActivity(intent);
     }
 
