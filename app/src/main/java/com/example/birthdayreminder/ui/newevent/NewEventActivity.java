@@ -15,6 +15,7 @@ import com.example.birthdayreminder.R;
 import com.example.birthdayreminder.base.BaseActivity;
 import com.example.birthdayreminder.data.model.Event;
 import com.example.birthdayreminder.ui.Constants;
+import com.example.birthdayreminder.ui.showevents.ShowEventsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -37,7 +38,6 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     private long birthday;
     private int id;
     private long date;
-    private long daysLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,10 +122,8 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            daysLeft = presenter.getDaysLeft(date);
-            Event event = new Event(firstName, lastName, date, daysLeft);
-            presenter.insertContacts(event);
-          //  presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, ADD_SCREEN);
+            presenter.insertContacts(firstName, lastName);
+            presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, ADD_SCREEN);
         });
     }
 
@@ -145,9 +143,8 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
             }
             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-            long daysLeft = presenter.getDaysLeft(birthday);
-            presenter.updateContact(firstName, lastName, date, daysLeft, id);
-           // presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, EDIT_SCREEN);
+            presenter.updateContact(firstName, lastName, id);
+            presenter.onClick(NewEventActivity.this, ShowEventsActivity.class, EDIT_SCREEN);
         });
     }
 
@@ -160,7 +157,7 @@ public class NewEventActivity extends BaseActivity implements NewEventActivityVi
     public void displayDatePickerDialog(int year, int month, int day) {
         DatePickerDialog datePicker = new DatePickerDialog(NewEventActivity.this, R.style.DatePickerStyle, (view, year1, monthOfYear, dayOfMonth) -> {
             presenter.onDateSet(year1, monthOfYear, dayOfMonth);
-            date = presenter.onCalendarSet(year1, monthOfYear, dayOfMonth).getTimeInMillis();
+            presenter.onCalendarSet(year1, monthOfYear, dayOfMonth);
         }, year, month, day);
         datePicker.show();
     }

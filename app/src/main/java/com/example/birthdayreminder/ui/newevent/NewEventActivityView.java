@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.birthdayreminder.base.BaseView;
 import com.example.birthdayreminder.data.model.Event;
 
+import java.util.Calendar;
 import java.util.List;
 
 public interface NewEventActivityView extends BaseView {
