@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.birthdayreminder">
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".CustomApplication"
@@ -10,10 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-    <!--    <activity android:name=".ui.settings.SetSettingsActivity"></activity>
-        <activity android:name=".ui.editevent.EditEventActivity" />-->
+<!--        <receiver
+            android:name=".ui.settings.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>-->
+
+      <!--  <activity android:name=".ui.settings.SetSettingsActivity" />-->
         <activity android:name=".ui.newevent.NewEventActivity" />
-       <!-- <activity android:name=".ui.showevents.ShowEventsActivity">
+  <!--      <activity android:name=".ui.showevents.ShowEventsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

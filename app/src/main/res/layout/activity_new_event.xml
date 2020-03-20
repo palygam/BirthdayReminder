@@ -7,14 +7,15 @@
     app:errorEnabled="true">
 
     <androidx.appcompat.widget.Toolbar
+        style="@style/Widget.AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white" />
+        />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.AppTheme.TextInputLayout"
         android:id="@+id/last_name_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +33,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.AppTheme.TextInputLayout"
         android:id="@+id/first_name_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +50,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.AppTheme.TextInputLayout"
         android:id="@+id/time_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +81,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:text="@string/button_main_activity" />
+            android:background="?android:selectableItemBackground"
+            style="@style/Widget.AppTheme.Button"
+          />
 
         <ProgressBar
             android:id="@+id/progress_bar"

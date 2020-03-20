@@ -12,21 +12,37 @@ import java.util.Calendar;
 public class NewEventActivityPresenter implements BasePresenter {
     private Calendar calendar;
     private NewEventActivityView view;
+    private long date;
+    private long daysLeft;
 
     public NewEventActivityPresenter(NewEventActivityView view) {
         this.view = view;
     }
 
-    public void onClick(Context context, Class newActivity) {
-        view.navigateToNewActivity(context, newActivity);
+    public void onClick(Context context, Class newActivity, Enum screenType) {
+        view.navigateToNewActivity(context, newActivity, screenType);
     }
 
-    public void insertContacts(Event event) {
+    public void insertContacts(String firstName, String lastName) {
+        findDaysLeft(date);
+        Event event = new Event(firstName, lastName, date, daysLeft);
         final Handler handler = new Handler();
         view.showProgressBar();
         Thread backgroundThread = new Thread(() -> {
             CustomApplication.getRepository().insert(event);
             handler.post(() -> view.hideProgressBar());
+        });
+        backgroundThread.start();
+    }
+
+    public void updateContact(String name, String lastName, int id) {
+        findDaysLeft(date);
+        final Handler handler = new Handler();
+        view.showProgressBar();
+        Thread backgroundThread = new Thread(() -> {
+            CustomApplication.getRepository().update(name, lastName, date, daysLeft, id);
+            handler.post(() ->
+                    view.hideProgressBar());
         });
         backgroundThread.start();
     }
@@ -37,7 +53,17 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.setDateText(dateOfBirth);
     }
 
-    public long getDaysLeft() {
+    public void findDaysLeft(long date) {
+        if (calendar != null) {
+            calculateDaysLeft(calendar);
+        } else {
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(date);
+            calculateDaysLeft(calendar);
+        }
+    }
+
+    public void calculateDaysLeft(Calendar calendar) {
         final Calendar todayDate = Calendar.getInstance();
         final Calendar birthdayCountdown = calendar;
 
@@ -55,8 +81,7 @@ public class NewEventActivityPresenter implements BasePresenter {
                 birthdayCountdown.set(Calendar.YEAR, todayDate.get(Calendar.YEAR) + 1);
             }
         }
-        final long daysLeft = (birthdayCountdown.getTimeInMillis() - todayDate.getTimeInMillis()) / 86400000;
-        return daysLeft;
+        daysLeft = (birthdayCountdown.getTimeInMillis() - todayDate.getTimeInMillis()) / 86400000;
     }
 
     public void onDateClicked() {
@@ -67,8 +92,8 @@ public class NewEventActivityPresenter implements BasePresenter {
         view.displayDatePickerDialog(year, month, day);
     }
 
-    public Calendar onCalendarSet(int year, int monthOfYear, int dayOfMonth) {
+    public void onCalendarSet(int year, int monthOfYear, int dayOfMonth) {
         calendar.set(year, monthOfYear, dayOfMonth);
-        return calendar;
+        date = calendar.getTimeInMillis();
     }
 }

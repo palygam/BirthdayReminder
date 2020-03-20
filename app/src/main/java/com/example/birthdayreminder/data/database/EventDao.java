@@ -33,5 +33,4 @@ public interface EventDao {
 
     @Query("SELECT * FROM table_events ORDER BY days_left ASC ")
     List<Event> getAllSorted();
-
 }
