@@ -18,4 +18,6 @@
     <string name="today">Сегодня </string>
     <string name="days_countdown">"Осталось дней: "</string>
     <string name="button_alarm">Сохранить уведомление</string>
+    <string name="birthday_notification">"Сегодня день рождения : "</string>
+    <string name="birthday_notification_part_2">" Не забудьте поздравить!"</string>
 </resources>

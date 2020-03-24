@@ -10,6 +10,7 @@ public final class Constants {
     public static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
     public static final String ACTION_UPDATE_NOTIFICATION =
             "com.example.birthdayreminder.ui.constants.ACTION_UPDATE_NOTIFICATION";
+    public  static final String WAKEUP_LOCK_TAG = "App:WakeLogTag";
 
     private Constants() {
     }
